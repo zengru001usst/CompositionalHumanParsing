@@ -106,7 +106,7 @@ class Node2(nn.Module):
                                    nn.Conv2d(256, 256, kernel_size=1, padding=0, stride=1, bias=False),
                                    BatchNorm2d(256), nn.ReLU(inplace=False), SEModule(256, reduction=16),
                                    nn.Conv2d(256, node2_cls, kernel_size=1, padding=0, stride=1, bias=True))
-
+        #这里的conv1包括了level-specific和nodespecific的步骤（SE），以及分割图的获取
         self.alpha = nn.Parameter(torch.ones(1))
 
     def forward(self, x, skip):
