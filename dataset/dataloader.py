@@ -11,8 +11,8 @@ class ValidationLoader(data.Dataset):
 
         fid = open(list_path, 'r')
         imgs, segs = [], []
-        for line in fid.readlines():
-            idx = line.strip().split(' ')[0]
+        for line in fid.readlines(): #依次读每一行数据
+            idx = line.strip().split(' ')[0]  #去掉每行头尾空白， 以空格为分割符， 取第一个
             image_path = os.path.join(root, 'images/' + str(idx) + '.jpg')
             seg_path = os.path.join(root, 'segmentations/' + str(idx) + '.png')
             imgs.append(image_path)
@@ -48,7 +48,7 @@ class ValidationLoader(data.Dataset):
         label_n2[(label_n2 > 12) & (label_n2 <= 15)] = 1
         label_n2[(label_n2 > 15) & (label_n2 < 255)] = 2
         label_n3 = seg.copy()
-        label_n3[(label_n3 > 0) & (label_n3 < 255)] = 1
+        label_n3[(label_n3 > 0) & (label_n3 < 255)] = 1  #构建多等级标签
 
         return images, label_n1, label_n2, label_n3, np.array(ori_size), name
 
