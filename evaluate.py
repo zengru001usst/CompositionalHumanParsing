@@ -55,9 +55,9 @@ def main():
         ori_size = ori_size[0].numpy()
         output_n1, output_n2, output_n3 = predict(model, image.numpy(),
                                                   (np.asscalar(ori_size[0]), np.asscalar(ori_size[1])),
-                                                  is_mirror=args.is_mirror, scales=args.eval_scale)
+                                                  is_mirror=args.is_mirror, scales=args.eval_scale) #asscalar取标量，改成item
 
-        pred_n1 = np.asarray(np.argmax(output_n1, axis=2), dtype=np.uint8)
+        pred_n1 = np.asarray(np.argmax(output_n1, axis=2), dtype=np.uint8) #之后要注意为什么是 2维度
         pred_n2 = np.asarray(np.argmax(output_n2, axis=2), dtype=np.uint8)
         pred_n3 = np.asarray(np.argmax(output_n3, axis=2), dtype=np.uint8)
 
@@ -164,7 +164,7 @@ def predict(net, image, output_size, is_mirror=True, scales=[1]):
             outputs_fb.append(fb_prediction)
 
         outputs = np.mean(outputs, axis=0)
-        outputs = outputs.transpose(1, 2, 0)
+        outputs = outputs.transpose(1, 2, 0)   #为什么要变换通道呢
         outputs_hb = np.mean(outputs_hb, axis=0)
         outputs_hb = outputs_hb.transpose(1, 2, 0)
         outputs_fb = np.mean(outputs_fb, axis=0)
